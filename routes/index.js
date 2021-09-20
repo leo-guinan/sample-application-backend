@@ -14,16 +14,15 @@ router.get('/cats/filter/', function(req, res, next) {
   const lte = parseFloat(req.query.lte)
   const gte = parseFloat(req.query.gte)
   let catsToReturn = []
-  datasource.forEach((cat) => {
-    console.log(cat.price)
-    console.log(gte)
-    console.log(lte)
-    console.log(cat.price >= gte)
-    console.log(cat.price <= lte)
-    if (gte && parseFloat(cat.price) >= gte ) {
+  datasource.forEach((cat) => {    
+    const price = parseFloat(cat.price)
+    if (gte && lte &&  price >= gte && price <= lte) {
       catsToReturn.push(cat)
     }
-    if (lte && parseFloat(cat.price) <= lte) {
+    else if (gte && price >= gte ) {
+      catsToReturn.push(cat)
+    }
+    else if (lte && price <= lte) {
       catsToReturn.push(cat)
     }
   })
